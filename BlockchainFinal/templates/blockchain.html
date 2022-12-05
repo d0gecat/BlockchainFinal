@@ -1,0 +1,50 @@
+<html>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        color: black;
+    }
+
+    .centernav {
+        overflow: hidden;
+        background-color: black;
+        color: white;
+    }
+
+    .centernav a {
+        float: left;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+    }
+
+    .centernav a:hover {
+        background-color: #DDDDDD;
+        color: black;
+    }
+
+    .centernav a.active {
+        background-color: #D90000;
+        color: white;
+    }
+</style>
+                <div class="centernav">
+                    <a href="/">Home</a>
+                    <a href="/results">Current Results</a>
+                    <a href="/blockchain">Current Blockchain</a>
+                </div>
+    <body>
+        <center>
+            <br><br>
+            <h1>These are all the current votes that have occurred so far</h1>
+            {{data.chain}}
+            <br>
+            <br>
+            <br>
+            There have been {{data.length - 1}} votes so far
+        </center>
+    </body>
+</html>

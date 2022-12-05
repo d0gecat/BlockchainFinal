@@ -25,7 +25,7 @@ class Blockchain(object):
         blockEncoder = json.dumps(block, sort_keys=True).encode()
         return hashlib.sha256(blockEncoder).hexdigest()
 
-    # Proof of Work vs Proof of Stake
+    # Proof of Work
     def PoW(self, index, Previous_block_hash, transactions):
         nonce = 0
         time1 = time()
@@ -38,11 +38,13 @@ class Blockchain(object):
         print(nonce)
         return nonce
 
+    # Makes sure the PoW is correct
     def validate_proof(self, index, Previous_block_hash, transactions, nonce):
         data = f'{index},{Previous_block_hash},{transactions},{nonce}'.encode()
         hash_data = hashlib.sha256(data).hexdigest()
         return hash_data[:len(self.difficulty_level)] == self.difficulty_level
 
+    # add the block to the chain
     def append_block(self, nonce, Previous_block_hash):
         block = {
             'index': len(self.chain),
@@ -55,6 +57,7 @@ class Blockchain(object):
         self.chain.append(block)
         return block
 
+    # add the vote to the block
     def add_vote(self, sender, voter_ID, amount):
         self.current_transaction.append({
             'amount': amount,
@@ -63,6 +66,7 @@ class Blockchain(object):
         })
         return self.last_block['index'] + 1
 
+    # return the last block in the block chain
     @property
     def last_block(self):
         return self.chain[-1]
@@ -104,7 +108,7 @@ blockchain = Blockchain()
 node_identifier = str(uuid4()).replace('-', "")
 
 
-# routes
+# routes ####################################################################################
 @app.route('/blockchain', methods=['GET'])
 def full_chain():
     response = {

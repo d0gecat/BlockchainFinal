@@ -58,11 +58,11 @@ class Blockchain(object):
         return block
 
     # add the vote to the block
-    def add_vote(self, sender, voter_ID, amount):
+    def add_vote(self, election, voter_ID, candidate_vote):
         self.current_transaction.append({
-            'amount': amount,
+            'candidate_vote': candidate_vote,
             'voter_ID': voter_ID,
-            'sender': sender
+            'election': election
         })
         return self.last_block['index'] + 1
 
@@ -79,7 +79,7 @@ class Blockchain(object):
         vote1 = 0
         vote2 = 0
         for i in temp2:
-            vote = list(map(itemgetter('amount'), i))
+            vote = list(map(itemgetter('candidate_vote'), i))
             vote = int(vote[0])
             if vote == 1:
                 vote1 += 1
@@ -127,9 +127,9 @@ def vote_page():
 def add_vote_candidate1():
     if not blockchain.check_vote_status:
         blockchain.add_vote(
-            sender="0",
+            election="0",
             voter_ID=node_identifier,
-            amount=1
+            candidate_vote=1
         )
         last_block_hash = blockchain.Block_Hash(blockchain.last_block)
         index = len(blockchain.chain)
@@ -151,9 +151,9 @@ def add_vote_candidate1():
 def add_vote_candidate2():
     if not blockchain.check_vote_status:
         blockchain.add_vote(
-            sender="0",
+            election="0",
             voter_ID=node_identifier,
-            amount=2
+            candidate_vote=2
         )
         last_block_hash = blockchain.Block_Hash(blockchain.last_block)
         index = len(blockchain.chain)
